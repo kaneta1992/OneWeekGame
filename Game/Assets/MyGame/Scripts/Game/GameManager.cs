@@ -13,6 +13,13 @@ public abstract class IGameState
 
 public class GameStart : IGameState
 {
+	public GameStart()
+	{
+		FillEffectScript.SetColorAnimation (new Color(1.0f,1.0f,1.0f,1.0f),
+		                                    new Color(0.0f,0.0f,0.0f,0.0f),
+		                                    1.5f
+		                                    );
+	}
 	public override IGameState Update()
 	{
 		if (GameManager.Instance.reciveMessage == "ToGamePlay")
@@ -35,9 +42,9 @@ public class GamePlay : IGameState
 		{
 			return new GameClear();
 		}
-		if (GameManager.Instance.reciveMessage == "ToGameOver")
+		if (GameManager.Instance.reciveMessage == "ToToGameOver")
 		{
-			return new GameOver();
+			return new ToGameOver();
 		}
 		return null;
 	}
@@ -58,6 +65,29 @@ public class GameClear : IGameState
 	public override string ClassName()
 	{
 		return "GameClear";
+	}
+}
+
+public class ToGameOver : IGameState
+{
+	public ToGameOver()
+	{
+		FillEffectScript.SetColorAnimation (new Color(0.0f,0.0f,0.0f,0.0f),
+		                                    new Color(1.0f,0.0f,0.0f,1.0f),
+		                                    3.0f
+		                                    );
+	}
+	public override IGameState Update()
+	{
+		if (GameManager.Instance.reciveMessage == "ToGameOver")
+		{
+			return new GameOver();
+		}
+		return null;
+	}
+	public override string ClassName()
+	{
+		return "ToGameOver";
 	}
 }
 

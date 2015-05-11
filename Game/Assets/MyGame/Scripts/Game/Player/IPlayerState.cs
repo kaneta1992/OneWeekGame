@@ -6,6 +6,7 @@ public abstract class IPlayerState
 	protected FPSController Controller_;
 
 	public abstract IPlayerState Update(Vector3 keyDisp,Vector2 mouseDisp,float gravity,float speed);
+	public virtual void OnTriggerEnter(Collider collision){}
 }
 public class PlayerFall : IPlayerState
 {
@@ -84,6 +85,40 @@ public class PlayerInput : IPlayerState
 	{
 		PositionUpdate (keyDisp,gravity,speed);
 		DirectionUpdate(mouseDisp);
+		return null;
+	}
+	public override void OnTriggerEnter(Collider collision)
+	{
+		GameManager.Instance.Send ("ToToGameOver");
+		this.Controller_.SetState (new PlayerToGameOver (this.Controller_));
+	}
+}
+
+public class PlayerToGameOver : IPlayerState
+{
+	float EulerX_,EulerY;
+	float Time_;
+	public PlayerToGameOver(FPSController controller)
+	{
+		this.Controller_ = controller;
+		this.Controller_.GetComponent<FPSInput> ().enabled = false;
+		this.Controller_.transform.FindChild ("GunModel").gameObject.SetActive (false);
+		this.Time_ = 3.0f;
+		Time.timeScale = 1.0f;
+		this.Controller_.SetMoveDir (Vector3.zero);
+	}
+
+	public override IPlayerState Update(Vector3 keyDisp,Vector2 mouseDisp,float gravity,float speed)
+	{
+		this.Time_ -= Time.deltaTime;
+		if (this.Time_ > 2.5f) {
+			float secondFrame=Utility.Second2Frame60(0.5f);
+			this.Controller_.AddEuler (new Vector3((-120.0f)/secondFrame,90.0f/secondFrame,0.0f));
+		}
+
+		if (this.Time_ <= 0.0f) {
+			GameManager.Instance.Send("ToGameOver");
+		}
 		return null;
 	}
 }

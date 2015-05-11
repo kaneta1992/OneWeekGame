@@ -55,7 +55,7 @@ public class FPSFire : MonoBehaviour {
 		                               LayerMask.NameToLayer ("Bullet"));
 
 		//キャラクタ、カメラ状態変更
-		this.CameraController_.SetEulerZ (Random.Range(-1,1));
+		this.CameraController_.SetEulerZ (Random.Range(-1.5f,1.5f));
 		this.FPSController_.AddEuler (new Vector3(Random.Range(-0.5f,-1.0f),0.0f,0.0f));
 	}
 	// Update is called once per frame

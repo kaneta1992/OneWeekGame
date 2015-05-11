@@ -40,6 +40,11 @@ public class FPSController : MonoBehaviour {
 	public void AddEuler(Vector3 euler)
 	{
 		this.RotateEuler_ += euler;
+		this.RotateEuler_.x = Mathf.Clamp (this.RotateEuler_.x, -80.0f, 80.0f);
+	}
+	public void SetEuler(Vector3 euler)
+	{
+		this.RotateEuler_ = euler;
 	}
 	public void AddMoveDir(Vector3 move)
 	{
@@ -67,8 +72,12 @@ public class FPSController : MonoBehaviour {
 	{
 		return this.CharaController_.isGrounded;
 	}
+	public void SetState(IPlayerState state)
+	{
+		this.State_ = state;
+	}
 	void OnTriggerEnter(Collider collision)
 	{
-		GameManager.Instance.Send ("ToGameOver");
+		this.State_.OnTriggerEnter (collision);
 	}
 }

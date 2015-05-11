@@ -44,4 +44,16 @@ public class Utility{
 													trans.rotation)as GameObject;
 		bullet.GetComponent<BulletScript> ().Init (speed,layerMask,layer);
 	}
+	public static Color LerpColor(Color srcColor,Color destColor,float time)
+	{
+		return srcColor * (time) + destColor * (1.0f - time);
+	}
+	public static Vector2 LerpVector2(Vector2 srcVector,Vector2 destVector,float time)
+	{
+		return srcVector * (time) + destVector * (1.0f - time);
+	}
+	public static float Second2Frame60(float second)
+	{
+		return second*60.0f;
+	}
 }

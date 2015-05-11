@@ -38,4 +38,4 @@ Material:
       data:
         first:
           name: _Info
-        second: {r: .505802453, g: .525206149, b: -9.61650528e-08, a: 0}
+        second: {r: 0, g: 0, b: -9.61650528e-08, a: 0}
